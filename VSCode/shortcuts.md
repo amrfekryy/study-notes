@@ -30,4 +30,7 @@
 - `Alt + click` : multiple cursors
 
 ## Others
-- `Ctrl + Shift + V` : View `.md` files
+- `Ctrl + Shift + V` : view `.md` files
+
+## React
+- `rfce` : create functional component
