@@ -32,5 +32,6 @@
 ## Others
 - `Ctrl + Shift + V` : view `.md` files
 
-## React
+## Snippets
 - `rfce` : create functional component
+- `clg`, `clo` : console log
