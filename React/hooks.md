@@ -39,3 +39,64 @@ Functions that let you “hook into” React features (ex: state, lifecycle) fro
   - no DA: after every render
   - DA=[]: after first render only
   - DA=[...dependencies]: when a dependency updates
+
+### useCallback
+```js 
+React.memo() 
+// HOC that prevents a child component from rerendering upon parent rerender 
+// child only rerenders if its props or state change
+```
+```js
+  const callback1 = () => {/*  */}
+  const callback2 = useCallback(() => {/*  */}, [/* dependency array */]) 
+```
+- `callback1` will have a new reference with every componenet rerender.
+- `callback2` will have a new reference only when a dependency updates.
+- when?
+  1- when it is used in the dependencies list and checked for referential equlaity.
+  2- when it is passed to optimized components (that use `React.memo`) that rely on referential equlaity to prevent unnecessary rerenders.
+
+### useMemo
+```js
+  const callback = () => {/*  */}
+  const value1 = callback()
+
+  const value2 = useMemo(() => {/*  */; return value;}, [/* dependency array */]) 
+```
+- `value1` will be computed with every componenet rerender.
+- `value2` will be computed only when a dependency updates.
+- `useMemo` caches the return value of the callback, `useCallback` caches the callback instance itself.
+- when? 
+  - when the value is non premitive and is used in the dependencies list and checked for referential equlaity. 
+  - when the value is computationally expensive to calculate.
+
+### useRef
+```jsx
+  // usage 1: accessing DOM nodes:
+
+  const inputRef = useRef(null);
+  const useEffect(() => {
+    inputRef.current.focus()
+  }, [])
+  return <input ref={inputRef} type="text" />
+```
+```jsx
+  // usage 2: storing any mutable value similar to instance variables in a class component
+  
+  const [timer, setTimer] = useState(0)
+  
+  const intervalRef = useRef()
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setTimer(timer => timer + 1)
+    }, 1000)
+    return () => clearInterval(intervalRef.current)
+  }, [])
+
+  return <div>
+    Timer: {timer}
+    <button onClick={() => clearInterval(intervalRef.current)}>Clear Timer</button>
+  </div>
+```
+- the value in `.current` will persist through rerenders, and it will not cause a rerender when its changed.
