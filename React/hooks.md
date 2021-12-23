@@ -100,3 +100,19 @@ React.memo()
   </div>
 ```
 - the value in `.current` will persist through rerenders, and it will not cause a rerender when its changed.
+
+### useContext
+```js  
+  // 1- create context
+  export const ContextName = React.createContext(initialValue)
+
+  // 2- provide context by wrapping a parent component
+  <ContextName.Provider value={/* the value to be passed */}>
+    <ParentComponent/>
+  </ContextName.Provider>
+  
+  // 3- consume context in a child component
+  const value = useContext(ContextName)
+
+```
+- context provides a way to pass data through the components tree without having to pass props down manually at every level.
