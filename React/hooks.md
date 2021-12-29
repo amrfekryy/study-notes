@@ -2,18 +2,17 @@
 Functions that let you “hook into” React features (ex: state, lifecycle) from function components (previously known as “stateless components”).
 
 ### Why?
-- avoid `this` keyword confusion
-  - in classes, we need to use `this` keyword, and remember to bind event handlers.
-- optimization
-  - classes don't minify well and make hot reloading unreliable.
-- sharing stateful logic
-  - in classes, we had to use advanced patterns (HOC, render props) which changes component hirarchy and make code less readable.
-- group related logic into isolated units 
-  - in classes, we are forced to split logic based on lifecycle methods.
+- reusing stateful logic:
+  - we can extract stateful logic with `custom hooks` instead of using advanced patterns (HOC, render props) which changes component hirarchy and make code less readable.
+- replacing complexity of lifecycle methods:
+  - `useEffect` hook groups related logic (separates concerns) in units rather than forcing a split based on lifecycle methods.
+- solving class-components issues:
+  - avoiding `this` keyword confusion, and having to bind event handlers.
+  - optimization issues: classes don't minify well and make hot reloading unreliable.
 
 ### Rules
-- only call inside a functional component or a custom hook
 - only call hooks at top level
+- only call hooks from React function components or custom hooks
 
 ### useState
 ```js
@@ -23,7 +22,7 @@ Functions that let you “hook into” React features (ex: state, lifecycle) fro
 - the setter replaces the old state.
   - in classes, the state is always and object, the setter auto merges updates.
   - use the spread operator to merge updates to first level of objects or append to arrays.
-  - use a deepMerge function to to merge updates to further levels of objects.
+  - use a deepMerge function to merge updates to further levels of objects.
 
 ### useEffect
 ```js
@@ -39,6 +38,7 @@ Functions that let you “hook into” React features (ex: state, lifecycle) fro
   - no DA: after every render
   - DA=[]: after first render only
   - DA=[...dependencies]: when a dependency updates
+- cleanup function runs before excuting the next effect and before the component unmounts.
 
 ### useCallback
 ```js 
@@ -113,6 +113,5 @@ React.memo()
   
   // 3- consume context in a child component
   const value = useContext(ContextName)
-
 ```
 - context provides a way to pass data through the components tree without having to pass props down manually at every level (prop drilling).
