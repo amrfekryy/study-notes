@@ -1,4 +1,4 @@
-### Code Splitting
+### > Code Splitting
 - tree shaking: elemination of dead (unused) code.
 - bundling: the process of following imported files, getting used pieced of code (tree shaking), and merging them into a single file (bundle).
   - CRA, Next.js and similar tools provide webpack setup (module bundling) out of the box.
@@ -40,3 +40,55 @@
 - `ErrorBoundary`: catches errors triggered by lazy components (ex: failed to load due to network error)
   - it can be placed anywhere above the lazy component(s).
 - a good place to start is with routes (pages). it will split bundles evenly, and will not disrupt user experience.
+
+
+### > Error Boundaries
+```jsx
+  class ErrorBoundary extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { hasError: false };
+    }
+
+    static getDerivedStateFromError(error) {
+      // update state to render the fallback UI.
+      return { hasError: true };
+    }
+
+    componentDidCatch(error, errorInfo) {
+      // log the error to an error reporting service 
+      // (to learn about unhandled exceptions as they happen in production, and fix them)
+      logErrorToMyService(error, errorInfo);
+      // component stack traces can be found in errorInfo.componentStack
+    }
+
+    render() {
+      if (this.state.hasError) {
+        // render any custom fallback UI
+        return <h1>Something went wrong.</h1>;
+      }
+      return this.props.children; 
+    }
+  }
+
+  // usage
+  <ErrorBoundary>
+    <SomeComponent/>
+  </ErrorBoundary>
+```
+- a React component that catches JS errors in child component tree, log errors, and display a fallback UI.
+  - it is like JS catch {} block, but for components.
+- it catches errors during rendering, in lifecycle methods, and in constructors.
+- it doesn't catch:
+  - errors within itself.
+    - if it fails rendering the error message (fallback UI), the error will propagate to the closest error boundary above it.
+    - use a parent error boundary to catch it.
+  - errors for event handlers.
+    - use `try / catch` statements to catch them.
+  - errors of asynchronous code.
+  - SSR errors.
+- a class component is an error boundary if it implements `static getDerivedStateFromError()` and/or `componentDidCatch()` lifecycle methods.
+- where to place error boundaries?
+  - we may wrap top-level route components to display a “Something went wrong” message to the user.
+  - we may also wrap individual widgets in an error boundary to protect them from crashing the rest of UI.
+- as of React 16, errors that were not caught by any error boundary will result in unmounting of the whole React component tree.
