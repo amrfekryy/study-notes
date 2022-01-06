@@ -96,9 +96,7 @@
 
 ### > Forwarding Refs
 ```jsx
-  // useful for components that contain DOM elements that need to be accessed throug the ref
-  // button, input, etc
-  const FancyButton = React.forwardRef((props, ref) => ( // function myFunction(props, ref)(
+  const FancyButton = React.forwardRef((props, ref) => (
     <button ref={ref} className="FancyButton">
       {props.children}
     </button>
@@ -109,7 +107,8 @@
   <FancyButton ref={ref}>Click me!</FancyButton>;
 ```
 - a technique for automatically passing a ref through a component to one of its children.
-- we use it since the `ref` attribute is not available in the props. (like `key`)
+- we use it since the `ref` attribute is not available in the props (like `key`).
+- useful for components that contain DOM elements that need to be accessed through the ref (button, input, etc).
 - if you name the render function, DevTools will also include its name:
   - `React.forwardRef((props, ref) => ())`: name = ForwardRef
   - `React.forwardRef(function myFunction(props, ref)())`: name = ForwardRef(myFunction)
