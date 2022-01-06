@@ -92,3 +92,25 @@
   - we may wrap top-level route components to display a “Something went wrong” message to the user.
   - we may also wrap individual widgets in an error boundary to protect them from crashing the rest of UI.
 - as of React 16, errors that were not caught by any error boundary will result in unmounting of the whole React component tree.
+
+
+### > Forwarding Refs
+```jsx
+  // useful for components that contain DOM elements that need to be accessed throug the ref
+  // button, input, etc
+  const FancyButton = React.forwardRef((props, ref) => ( // function myFunction(props, ref)(
+    <button ref={ref} className="FancyButton">
+      {props.children}
+    </button>
+  ));
+
+  // You can now get a ref directly to the DOM button:
+  const ref = React.createRef();
+  <FancyButton ref={ref}>Click me!</FancyButton>;
+```
+- a technique for automatically passing a ref through a component to one of its children.
+- we use it since the `ref` attribute is not available in the props. (like `key`)
+- if you name the render function, DevTools will also include its name:
+  - `React.forwardRef((props, ref) => ())`: name = ForwardRef
+  - `React.forwardRef(function myFunction(props, ref)())`: name = ForwardRef(myFunction)
+- see the docs for forwarding refs in HOCs.
