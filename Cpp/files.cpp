@@ -8,12 +8,13 @@ int main() {
   fstream file;
   file.open("path/to/file.txt", mode) /* 
     mode:
+    - default mode is (ios::in | ios::out) if not specified.
+    - ios::in | ios::out -- read or write file. doesn't create file if doesn't exist, and open fails.
     - ios::in -- read file. doesn't create file if doesn't exist, and open fails.
     - ios::out -- write to file (overwrite data). creates file if doesn't exist. 
     - ios::trunc -- write to file (overwrite data). creates file if doesn't exist.
     - ios::app -- append to end of file. creates file if doesn't exist.
     - ios::binary -- read or write file in binary format. (default is text).
-    - default mode is (ios::in | ios::out) if not specified.
   */
 
   // or open upon initialization

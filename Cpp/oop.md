@@ -39,6 +39,7 @@
 			double length;
 
 		public:
+			// functions declarations
 			void setWidth(double);
 			void setLength(double);
 			double getWidth() const;
@@ -122,7 +123,7 @@
 				length = len;
 			}
 
-			Rectangle(double width = 0, double len = 0); // if all args has default values then it is a default constructor.
+			Rectangle(double = 0, double = 0); // if all args has default values then it is a default constructor.
 
 			// member initializer list (another way to initialize member attributes)
 			// default
