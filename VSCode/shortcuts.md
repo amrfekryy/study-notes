@@ -4,6 +4,7 @@
 - `Ctrl + W` : close active tab
 - `Ctrl + Shift + T` : reopen recent tabs
 - `Ctrl + K Z` : Zen mode
+- `Ctrl + K S` : Save all updated files
 
 ## Sidebar:
 - `Ctrl + B` : toggle sidebar
